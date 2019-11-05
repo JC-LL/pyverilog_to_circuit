@@ -1,0 +1,34 @@
+FSM signal: arf_obf.ap_CS_fsm, Condition list length: 14
+Condition: (Eq, And), Inferring transition condition
+Condition: (Ulnot, Eq), Inferring transition condition
+Condition: (Eq, Ulnot), Inferring transition condition
+Condition: (Ulnot, Ulnot, Eq), Inferring transition condition
+Condition: (Ulnot, Ulnot, Ulnot, Eq), Inferring transition condition
+Condition: (Ulnot, Ulnot, Ulnot, Ulnot, Eq), Inferring transition condition
+Condition: (Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Eq), Inferring transition condition
+Condition: (Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Eq, And), Inferring transition condition
+Condition: (Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Eq), Inferring transition condition
+Condition: (Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Eq, Ulnot), Inferring transition condition
+Condition: (Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Eq), Inferring transition condition
+Condition: (Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Eq), Inferring transition condition
+Condition: (Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Ulnot, Eq), Inferring transition condition
+# SIGNAL NAME: arf_obf.ap_CS_fsm
+# DELAY CNT: 0
+16 --None--> 32
+1 --((1'd1==arf_obf_ap_CS_fsm['d0])&&(arf_obf_ap_start==1'd1))--> 2
+1 --(!((1'd1==arf_obf_ap_CS_fsm['d0])&&(arf_obf_ap_start==1'd1)))--> 1
+2 --None--> 4
+4 --None--> 8
+512 --None--> 1
+32 --None--> 64
+8 --None--> 16
+64 --((1'd1==arf_obf_ap_CS_fsm['d6])&&(1'd1==arf_obf_tmp_3_reg_720))--> 1024
+64 --(!((1'd1==arf_obf_ap_CS_fsm['d6])&&(1'd1==arf_obf_tmp_3_reg_720)))--> 128
+128 --None--> 256
+256 --None--> 512
+1024 --None--> 512
+here
+Loop
+(1, 2, 4, 8, 16, 32, 64, 1024, 512)
+(1, 2, 4, 8, 16, 32, 64, 128, 256, 512)
+(1,)
