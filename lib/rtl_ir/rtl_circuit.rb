@@ -36,6 +36,9 @@ module RTL
     class OrGate < BinaryGate
     end
 
+    class XorGate < BinaryGate
+    end
+
     class EqGate < BinaryGate
     end
 
@@ -72,6 +75,9 @@ module RTL
     end
 
     class MinusGate < BinaryGate
+    end
+
+    class SllGate < BinaryGate
     end
 
 end

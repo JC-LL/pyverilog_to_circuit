@@ -141,6 +141,20 @@ module RTL
     end
   end
 
+  class BitGroup < Circuit
+    attr_accessor :nb_parts
+    def initialize
+      super()
+      @nb_parts=0
+      add Port.new("f",:out)
+    end
+
+    def add port
+      @nb_parts+=1
+      super port
+    end
+  end
+
   class Reg < Circuit
     def initialize
       super()

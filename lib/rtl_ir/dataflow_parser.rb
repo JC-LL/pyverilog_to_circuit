@@ -34,7 +34,9 @@ module RTL
       expect :Directive
       expect :colon
       expect :newline
-      accept_until_newline
+      unless showNext.is_a?(:Instance)
+        accept_until_newline
+      end
     end
 
     def accept_until_newline
@@ -74,7 +76,7 @@ module RTL
     end
 
     def parse_node head
-      "parsing node '#{head}' at #{showNext.pos}"
+      #puts "parsing node '#{head}' at #{showNext.pos}"
       pos=showNext.pos
       klass=Object.const_get("RTL::"+head.to_s)
       expect :lparen
@@ -104,6 +106,14 @@ module RTL
       key=expect(:id).val
       expect :colon
       value=parse_attr_value
+      if showNext.is_a? :comma # ugly format !
+        # value is now an array.
+        value=[value]
+        while showNext.is_a? :comma
+          acceptIt
+          value << parse_attr_value
+        end
+      end
       {key => value}
     end
 
@@ -122,16 +132,6 @@ module RTL
         ret="vintlit_#{val}"
       else
         raise "unknown attr value '#{showNext}'"
-      end
-
-      # ugly format !
-      # ret is now an array.
-      if showNext.is_a? :comma
-        ret=[ret]
-        while showNext.is_a? :comma
-          acceptIt
-          ret << parse_attr_value
-        end
       end
       ret
     end

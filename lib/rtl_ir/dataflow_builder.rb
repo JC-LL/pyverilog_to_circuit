@@ -89,7 +89,7 @@ module RTL
     end
 
     def build_tree tree
-      cst=term=branch=part_select=operator=tree
+      cst=term=branch=part_select=operator=concat=tree
       case tree
       when IntConst
         @circuit.add port=Constant.new(cst.value)
@@ -115,9 +115,24 @@ module RTL
         @circuit.add slice=BitSlice.new(lsb..msb)
         sig.connect slice.port_with_name(:in,'i')
         port=slice.port_with_name(:out,'f')
+      when Concat
+        @circuit.add group=BitGroup.new
+        case concat.Next
+        when Array
+          concat.Next.each_with_index do |e,idx|
+            source_port=build_tree(e)
+            group.add input=Port.new("i#{idx}",:in)
+            source_port.connect input
+          end
+        else
+          source_port=build_tree(concat.Next)
+          group.add input=Port.new("i0",:in)
+          source_port.connect input
+        end
+        port=group.port_with_name(:out,'f')
       when Operator
         case type=operator.type
-        when "Eq","And","Or","Times","Eql","Plus","Minus","GreaterThan","LessThan"
+        when "Eq","And","Or","Times","Eql","Plus","Minus","GreaterThan","LessThan","Xor","Sll"
           klass=Object.const_get("RTL::"+type+"Gate")
           @circuit.add comp=klass.new
           i1=build_tree(operator.next[0])

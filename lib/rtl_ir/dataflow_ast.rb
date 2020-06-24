@@ -58,6 +58,9 @@ module RTL
   class Bind < PyVerilogNode
   end
 
+  class Concat < PyVerilogNode
+  end
+
   class Binary
     attr_accessor :lhs,:rhs
     def initialize l,r
@@ -70,5 +73,7 @@ module RTL
       "#{@lhs.to_s}.#{@rhs.to_s}"
     end
   end
+
+
 
 end

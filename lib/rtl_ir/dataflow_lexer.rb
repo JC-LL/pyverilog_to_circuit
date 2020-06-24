@@ -15,6 +15,7 @@ module RTL
       keyword 'Terminal'
       keyword 'Branch'
       keyword 'Operator'
+      keyword 'Concat'
       keyword 'Partselect'
 
       token :trans_end  => /\-\-\>/
