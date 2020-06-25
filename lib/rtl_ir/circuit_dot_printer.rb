@@ -21,18 +21,20 @@ module RTL
       @components.each do |c|
         inputs_str ="{"+c.ports[:in].collect{|e| "<#{e.name}>#{e.name}"}.join("|")+"}"
         outputs_str="{"+c.ports[:out].collect{|e| "<#{e.name}>#{e.name}"}.join("|")+"}"
-        str << "   #{c.name}[ shape=record; label=\"{ #{inputs_str}| #{c.name} | #{outputs_str} }\"];"
+        color=c.color
+        str << "   #{c.name}[ shape=record; style=filled ; color=#{color} ; label=\"{ #{inputs_str}| #{c.name} | #{outputs_str} }\"];"
       end
 
       @ports[:in].each do |p|
-        str << "   #{p.name};"
+        str << "   #{p.name}[shape=cds xlabel=\"#{p.name}\"];"
       end
+
       @ports[:out].each do |p|
-        str << "   #{p.name};"
+        str << "   #{p.name}[shape=cds xlabel=\"#{p.name}\"];"
       end
 
       @signals.each do |sig|
-        str << " #{sig.name}[label=\"#{sig.name}\"];"
+        str << " #{sig.name}[shape=point ; xlabel=\"#{sig.name}\"];"
       end
 
       @ports[:in].each do |p|
@@ -40,7 +42,7 @@ module RTL
           pin=wire.pout
           c=p.circuit==self ? "#{p.name}" : "#{p.circuit.name}:#{p.name}"
           if not(pin.circuit.name==self.name and pin.name==c)
-            str << "   #{c} -> #{pin.circuit.name}:#{pin.name}[ label=\"#{wire.name}\"]; /* tag1 */"
+            str << "   #{c} -> #{pin.circuit.name}:#{pin.name}[ label=\"#{wire.name}\"];"
           end
         end
       end

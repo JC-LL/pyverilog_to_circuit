@@ -4,7 +4,7 @@ module RTL
   class Circuit
     attr_accessor :name,:ports,:components,:signals
     attr_accessor :wires,:params,:father
-
+    attr_accessor :color
     @@id=0
 
     def initialize name=nil
@@ -16,6 +16,7 @@ module RTL
       @params={}
       @father=nil
       @wires=[]
+      @color="cadetblue"
     end
 
     def inputs
@@ -62,6 +63,7 @@ module RTL
         end
       end
     end
+
   end
 
   class Wire
@@ -131,53 +133,6 @@ module RTL
     end
   end
 
-  class BitSlice < Circuit
-    attr_accessor :slice
-    def initialize slice=0..0
-      super()
-      add Port.new("i",:in)
-      add Port.new("f",:out)
-      @slice=slice
-    end
-  end
-
-  class BitGroup < Circuit
-    attr_accessor :nb_parts
-    def initialize
-      super()
-      @nb_parts=0
-      add Port.new("f",:out)
-    end
-
-    def add port
-      @nb_parts+=1
-      super port
-    end
-  end
-
-  class Reg < Circuit
-    def initialize
-      super()
-      add Port.new("D",:in)
-      add Port.new("Q",:out)
-    end
-  end
-
-  class Mux < Circuit
-    attr_accessor :arity
-    def initialize
-      super()
-      @arity=0
-      add Port.new("i0",:in)
-      add Port.new("i1",:in)
-      add Port.new("sel",:in)
-      add Port.new("f",:out)
-    end
-
-    def add port
-      @arity+=1
-      super port
-    end
-  end
-
+  # WARNING :
+  # those elementary elements for circuit are much extended in file rtl_circuit.rb
 end
