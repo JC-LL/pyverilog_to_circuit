@@ -13,8 +13,6 @@ module RTL
     def run arguments
       compiler=Compiler.new
       compiler.options = args = parse_options(arguments)
-      $options=compiler.options
-
       if filename=args[:fsm_filename]
         compiler.compile_fsm filename
       elsif filename=args[:dataflow_filename]
@@ -51,13 +49,16 @@ module RTL
         options[:dataflow_filename]=filename
       end
 
+      parser.on("-m", "--metrics", "compute some metrics") do
+        options[:metrics]=true
+      end
+
       parser.on("--verbose", "verbose mode") do
         options[:verbose]=true
         $verbose=true
       end
 
       parser.parse!(arguments)
-
       options[:filename]=arguments.shift
 
       if arguments.any?

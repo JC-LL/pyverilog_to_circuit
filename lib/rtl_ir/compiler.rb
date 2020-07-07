@@ -3,13 +3,14 @@ require_relative 'control_parser'
 require_relative 'control_builder'
 require_relative 'dataflow_parser'
 require_relative 'dataflow_builder'
+require_relative 'dataflow_metrics'
 
 module RTL
 
   class Compiler
     attr_accessor :options
-
-    def initialize
+    attr_accessor :dataflow
+    def initialize options={}
       @options={}
       banner
     end
@@ -27,8 +28,15 @@ module RTL
     def compile_dataflow filename
       puts "=> compiling dataflow '#{filename}'"
       ast_dataflow=DataflowParser.new.parse filename
-      datapath=DataflowBuilder.new.build(ast_dataflow)
+      @dataflow=DataflowBuilder.new.build(ast_dataflow)
+      evaluate_metrics if options[:metrics]
     end
 
+
+    def evaluate_metrics
+      puts "=> evaluating metrics"
+      metrics=DataflowMetrics.new.evaluate(@dataflow)
+      pp metrics
+    end
   end
 end
